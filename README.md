@@ -4,17 +4,20 @@
 
 把「文档提取」固化成元能力工作流：MinerU 引擎外部引用（黑盒 subprocess 调），脚本管机械（提取/门禁），agent 管理解（据图补全）。
 
-## 架构：1 skill + 1 agent + 5 script
+## 架构：1 skill + 1 agent + 8 script
 
 | 层 | 文件 | 职责 |
 |---|---|---|
 | 引擎适配 | `scripts/mineru_client.py` | subprocess 调 mineru CLI + 产物解析 + 统计 |
 | 提取脚本 | `scripts/extract.py` | PDF→md+content_list.json+版面图 |
 | 质量门禁 | `scripts/verify.py` | 完整性 + 表格失败 + 漏页（实测抓 8 失败表格） |
+| 格式门禁 | `scripts/verify_format.py` | 公式 LaTeX 保留 + 表格空body/乱码 + 页丢失 |
 | 结构映射 | `scripts/structure_scan.py` | 扫 content_list.json 标题层级出「章节→页」清单（替代 pypdf） |
 | 参数扫描 | `scripts/param_scan.py` | 扫 content_list.json 出参数映射表候选 + 图-only 表 |
+| 分层索引 | `scripts/build_index.py` | 生成 data_structure.md（根+子索引，rag-skill 渐进式披露） |
+| 切块 | `scripts/chunk.py` | 笔记→chunk（每篇1chunk，超长按##节拆，供 ainsert） |
 | 整理代理 | `agents/extract-organizer.md` | 结构划分 + 据图补全 + 保留公式 + 参数映射表/流程引导 + 规范整理 |
-| skill 入口 | `SKILL.md` | 提取→验证→结构映射→参数扫描→整理→沉淀 |
+| skill 入口 | `SKILL.md` | 提取→验证→格式门禁→结构映射→参数扫描→整理→分层索引→切块→沉淀 |
 
 ## 依赖（引擎外部引用，不粘代码）
 
@@ -29,12 +32,18 @@
 python scripts/extract.py <pdf> --out <dir>
 # 验证（质量门禁）
 python scripts/verify.py <产物目录> --expect-pages N
+# 格式门禁（公式/表格完整性）
+python scripts/verify_format.py <产物目录> --expect-pages N
 # 结构映射（章节→页结构清单，替代 pypdf）
 python scripts/structure_scan.py <产物目录>
 # 参数扫描（扫出参数映射表候选 + 图-only 表）
 python scripts/param_scan.py <产物目录>
 # 整理（据图补全 + 参数映射表/流程引导 + 规范笔记）
 dispatch agents/extract-organizer.md
+# 分层索引（data_structure.md 根+子索引）
+python scripts/build_index.py <vault_dir> --subdirs <领域目录>
+# 切块（笔记→chunk，供 ainsert）
+python scripts/chunk.py <vault_dir> --subdirs <领域目录>
 ```
 
 ## 源码理解

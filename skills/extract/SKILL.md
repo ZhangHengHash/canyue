@@ -15,10 +15,13 @@ description: Use when 处理 PDF/扫描件/图片/Office 文档、需要转 mark
 |---|---|---|---|
 | 1 提取 | MinerU 提 PDF → md+JSON+版面图 | 脚本 | `python scripts/extract.py <pdf> --out <dir>` |
 | 2 验证 | 产物完整性 + 表格失败 + 漏页门禁 | 脚本 | `python scripts/verify.py <产物目录> --expect-pages N` |
-| 3 结构映射 | 扫标题层级出「章节→页」结构清单 | 脚本 | `python scripts/structure_scan.py <产物目录>` |
-| 4 参数扫描 | 扫出参数映射表候选 + 图-only 表 | 脚本 | `python scripts/param_scan.py <产物目录>` |
-| 5 整理 | 写笔记 + 据图补全 + 保留公式 + 参数映射表/流程引导 | 代理 | `dispatch agents/extract-organizer.md` |
-| 6 沉淀 | 建索引 + git 提交 | 脚本/代理 | 按知识库规范 |
+| 3 格式门禁 | 公式 LaTeX 保留 + 表格空body/乱码 + 页丢失 | 脚本 | `python scripts/verify_format.py <产物目录> --expect-pages N` |
+| 4 结构映射 | 扫标题层级出「章节→页」结构清单 | 脚本 | `python scripts/structure_scan.py <产物目录>` |
+| 5 参数扫描 | 扫出参数映射表候选 + 图-only 表 | 脚本 | `python scripts/param_scan.py <产物目录>` |
+| 6 整理 | 写笔记 + 据图补全 + 保留公式 + 参数映射表/流程引导 | 代理 | `dispatch agents/extract-organizer.md` |
+| 7 分层索引 | 生成 data_structure.md（根+子索引，rag-skill 渐进式披露） | 脚本 | `python scripts/build_index.py <vault_dir> --subdirs <领域目录>` |
+| 8 切块 | 笔记→chunk（每篇1chunk，超长按##节拆，供 ainsert） | 脚本 | `python scripts/chunk.py <vault_dir> --subdirs <领域目录>` |
+| 9 沉淀 | git 提交 | 脚本/代理 | 按知识库规范 |
 
 ## 依赖
 
