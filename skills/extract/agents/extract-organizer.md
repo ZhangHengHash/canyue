@@ -4,17 +4,18 @@
 
 ## 输入
 
-- 产物目录：`{product_dir}`（含 md / content_list.json / middle.json / images/ / param_scan.json）
+- 产物目录：`{product_dir}`（含 md / content_list.json / middle.json / images/ / structure_scan.json / param_scan.json）
 - 目标知识库：`{kb_dir}`
 - 整理规范：`{rules}`（frontmatter / 双链 / 据图补全 callout / 三重印证）
 
 ## 任务
 
-1. 读 `param_scan.json`（若存在），拿到：候选参数表 `candidate_params`、图-only 表 `image_only_tables`、全量 table/image 清单。
-2. 读 content_list.json，统计 type 分布 + 找出失败表格（table 无 img_path 且无 body）。
-3. 对照 markdown，检查：① 公式 LaTeX（equation 的 text）是否都在 md 里；② 表格是否完整（失败表格要「据图补全」）。
-4. 按规范写笔记：正文（md）+ 版面配图（images/）+ 失败表格据图补全 + 三重印证（正文/原文页面图/向量库）。
-5. **参数提炼**：对 `candidate_params` 里的每个参数表/参数图，产出「输入输出参数映射表」；对操作步骤类内容产出「流程引导」（见下）。
+1. 读 `structure_scan.json`（若存在），拿到「章节→页」结构清单 `sections`（H1 章节 + 页范围），据此把文档拆分成多篇笔记；**剩余噪声（正文被误判 H1）由你判断剔除**，不要盲信脚本。
+2. 读 `param_scan.json`（若存在），拿到：候选参数表 `candidate_params`、图-only 表 `image_only_tables`、全量 table/image 清单。
+3. 读 content_list.json，统计 type 分布 + 找出失败表格（table 无 img_path 且无 body）。
+4. 对照 markdown，检查：① 公式 LaTeX（equation 的 text）是否都在 md 里；② 表格是否完整（失败表格要「据图补全」）。
+5. 按规范写笔记：正文（md）+ 版面配图（images/）+ 失败表格据图补全 + 三重印证（正文/原文页面图/向量库）。
+6. **参数提炼**：对 `candidate_params` 里的每个参数表/参数图，产出「输入输出参数映射表」；对操作步骤类内容产出「流程引导」（见下）。
 
 ## 产出（markdown）
 

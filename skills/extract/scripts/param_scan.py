@@ -39,6 +39,15 @@ def _strip_html(s: str) -> str:
     return htmlmod.unescape(_TAG_RE.sub("", s)).strip()
 
 
+def _to_text(v) -> str:
+    """归一化 str | list[str] | None → 纯文本。caption/footnote 是 list，body/text 是 str。"""
+    if v is None:
+        return ""
+    if isinstance(v, list):
+        return " ".join(_strip_html(str(item)) for item in v if item)
+    return _strip_html(str(v))
+
+
 def _load_cl(product_dir: Path) -> list[dict]:
     stem = product_dir.parent.name
     p = product_dir / f"{stem}_content_list.json"
@@ -51,9 +60,9 @@ def _element_text(x: dict) -> str:
     """取元素的文本线索：table_body 纯文本 + caption + text + image_caption。"""
     parts = []
     for key in ("table_body", "table_caption", "image_caption", "text", "chart_body"):
-        v = x.get(key)
-        if isinstance(v, str) and v.strip():
-            parts.append(_strip_html(v))
+        v = _to_text(x.get(key))
+        if v:
+            parts.append(v)
     return " ".join(parts)
 
 
@@ -74,8 +83,8 @@ def scan(product_dir: Path, keywords: list[str]) -> dict:
     for x in cl:
         typ = x.get("type")
         page = (x.get("page_idx") or 0) + 1  # 1-based 供人读
-        caption = _strip_html(x.get("table_caption") or x.get("image_caption") or "")
-        body = _strip_html(x.get("table_body") or "")
+        caption = _to_text(x.get("table_caption") or x.get("image_caption"))
+        body = _to_text(x.get("table_body"))
         img = x.get("img_path")
 
         if typ == "table":

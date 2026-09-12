@@ -13,6 +13,8 @@ from pathlib import Path
 MINERU_BIN = os.environ.get("MINERU_BIN", r"D:\Anaconda\envs\mineru\Scripts\mineru.exe")
 # 国内模型源（无需代理），海外可设 huggingface
 DEFAULT_MODEL_SOURCE = os.environ.get("MINERU_MODEL_SOURCE", "modelscope")
+# MinerU 配置（元能力文件夹，不依赖 C 盘 ~/.mineru.json）
+MINERU_CONFIG = os.environ.get("MINERU_TOOLS_CONFIG_JSON", r"E:\agentic_src\元能力\mineru.json")
 
 
 def _check_bin():
@@ -34,6 +36,7 @@ def extract(pdf: Path, output_dir: Path, method: str = "auto", backend: str = "p
     env = dict(os.environ)
     env.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
     env.setdefault("MINERU_MODEL_SOURCE", DEFAULT_MODEL_SOURCE)
+    env.setdefault("MINERU_TOOLS_CONFIG_JSON", MINERU_CONFIG)
     p = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", env=env)
     product_dir = output_dir / pdf.stem / method
     if p.returncode != 0 or not (product_dir / f"{pdf.stem}.md").exists():
