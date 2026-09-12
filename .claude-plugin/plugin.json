@@ -1,0 +1,18 @@
+{
+  "name": "残月",
+  "description": "文档提取元能力工作流：MinerU 引擎外部引用，PDF/扫描件→markdown+content_list.json+版面图，含质量门禁（完整性/表格失败/漏页）+据图补全",
+  "version": "0.1.0",
+  "author": {
+    "name": "zhang666"
+  },
+  "license": "MIT",
+  "keywords": [
+    "extract",
+    "mineru",
+    "pdf",
+    "ocr",
+    "document",
+    "workflow",
+    "提取"
+  ]
+}

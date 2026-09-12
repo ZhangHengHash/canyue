@@ -1,0 +1,16 @@
+{
+  "name": "残月-marketplace",
+  "owner": {
+    "name": "zhang666"
+  },
+  "plugins": [
+    {
+      "name": "残月",
+      "description": "文档提取元能力工作流（MinerU 引擎外部引用，脚本管机械+agent 管理解）",
+      "source": "./",
+      "skills": [
+        "./skills/extract"
+      ]
+    }
+  ]
+}
