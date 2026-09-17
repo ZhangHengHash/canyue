@@ -10,11 +10,11 @@ import os
 import subprocess
 from pathlib import Path
 
-MINERU_BIN = os.environ.get("MINERU_BIN", r"D:\Anaconda\envs\mineru\Scripts\mineru.exe")
+MINERU_BIN = os.environ.get("MINERU_BIN", "")
 # 国内模型源（无需代理），海外可设 huggingface
 DEFAULT_MODEL_SOURCE = os.environ.get("MINERU_MODEL_SOURCE", "modelscope")
-# MinerU 配置（元能力文件夹，不依赖 C 盘 ~/.mineru.json）
-MINERU_CONFIG = os.environ.get("MINERU_TOOLS_CONFIG_JSON", r"E:\agentic_src\元能力\mineru.json")
+# MinerU 配置（可选，默认用 ~/.mineru.json）
+MINERU_CONFIG = os.environ.get("MINERU_TOOLS_CONFIG_JSON", "")
 
 
 def _check_bin():

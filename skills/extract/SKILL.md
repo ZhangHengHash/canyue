@@ -26,7 +26,7 @@ description: Use when 处理 PDF/扫描件/图片/Office 文档、需要转 mark
 ## 依赖
 
 - **引擎**：MinerU（`mineru[pipeline]` 环境），`MINERU_BIN` 指向 `mineru.exe`，`MINERU_MODEL_SOURCE=modelscope`（国内源）。
-- **配置**：`MINERU_TOOLS_CONFIG_JSON` 指向 `E:\agentic_src\元能力\mineru.json`（元能力文件夹统一配置，不依赖 C 盘 `~/.mineru.json`）。
+- **配置**：可选 `MINERU_TOOLS_CONFIG_JSON`，默认用 `~/.mineru.json`。
 - **模型**：`mineru-models-download -s modelscope -m pipeline`（layout/公式/OCR/表格 7 个模型）。
 
 ## 铁律
@@ -40,5 +40,4 @@ description: Use when 处理 PDF/扫描件/图片/Office 文档、需要转 mark
 
 ## 参考
 
-- MinerU 源码理解：`E:\AI-KB\03_提取工作流\`（见 extract skill 沉淀笔记）
-- 晓风（对标架构）：`E:\AI-KB\02_项目\16_源码理解插件.md`
+- 对标架构：晓风（源码理解工作流）仓库
