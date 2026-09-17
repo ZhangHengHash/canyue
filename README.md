@@ -52,7 +52,7 @@ python skills/extract/scripts/verify.py <产物目录> --expect-pages N
 python skills/extract/scripts/verify_format.py <产物目录> --expect-pages N
 python skills/extract/scripts/structure_scan.py <产物目录>
 python skills/extract/scripts/param_scan.py <产物目录>
-dispatch agents/extract-organizer.md
+# 整理（派子代理，prompt = agents/extract-organizer.md，框架无关）
 python skills/extract/scripts/build_index.py <vault_dir> --subdirs <领域目录>
 python skills/extract/scripts/chunk.py <vault_dir> --subdirs <领域目录>
 ```
